@@ -9,7 +9,7 @@
     android:paddingBottom="12dp">
 
     <TextView
-        android:id="@+id/textView11"
+        android:id="@+id/course_button_text"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -18,12 +18,12 @@
         android:text="Название курса"
         android:textColor="@color/french_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintEnd_toStartOf="@+id/course_button_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/course_button_icon"
         android:layout_width="55dp"
         android:layout_height="55dp"
         android:layout_marginEnd="24dp"

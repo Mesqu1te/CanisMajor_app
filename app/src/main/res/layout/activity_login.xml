@@ -105,6 +105,7 @@
         android:fontFamily="@font/ruda_regular"
         android:text="Повторите пароль:"
         android:textColor="@color/reseda_green"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="@+id/login_auth_button"
         app:layout_constraintTop_toBottomOf="@+id/login_password_field" />
 
@@ -160,6 +161,7 @@
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
         android:textColor="@color/french_gray"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/login_register_button"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/login_auth_button"
@@ -171,7 +173,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="BrainWave"
+        android:text="AppName"
         android:textColor="@color/french_gray"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"

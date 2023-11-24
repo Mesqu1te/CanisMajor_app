@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                     String password_input = String.valueOf(password.getText());
 
                     if (password_input.isEmpty()) {
-                        showErrorWindow(4, login, password, password_confirmation);
+                        showErrorWindow(5, login, password, password_confirmation);
                     }
                     else if (password_input.length() < 8) {
                         showErrorWindow(1, login, password, password_confirmation);
@@ -124,6 +124,12 @@ public class LoginActivity extends AppCompatActivity {
             window_desc.setText("Введите пароль ещё раз");
             login.setBackgroundResource(R.drawable.edittext_bordered);
             pass.setBackgroundResource(R.drawable.edittext_bordered);
+            pass_confirm.setBackgroundResource(R.drawable.edittext_error_bordered);
+        }
+        else if (errorCode == 5) {
+            window_desc.setText("Введите пароль");
+            login.setBackgroundResource(R.drawable.edittext_bordered);
+            pass.setBackgroundResource(R.drawable.edittext_error_bordered);
             pass_confirm.setBackgroundResource(R.drawable.edittext_error_bordered);
         }
         window.setVisibility(View.VISIBLE);
