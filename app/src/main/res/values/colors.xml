@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="teal">#1DE9B6</color>
+    <color name="grey">#ACACAC</color>
+    <color name="pink">#F50057</color>
+    <color name="background">#4DD0E1</color>
+
+    <color name="onyx">#2E3532</color>
+    <color name="reseda_green">#7E9181</color>
+    <color name="french_gray">#C7CEDB</color>
+    <color name="cadet_gray">#A0AAB2</color>
+    <color name="mountbatten_pink">#94849B</color>
+</resources>
