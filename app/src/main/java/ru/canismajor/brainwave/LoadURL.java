@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class LoadURL {
 
-    void getURL(Context context, String link) {
+    public static void getURL(Context context, String link) {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {

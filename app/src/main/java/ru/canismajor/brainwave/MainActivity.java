@@ -2,6 +2,7 @@ package ru.canismajor.brainwave;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,8 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
             course_name.setText("Курс №" + i);
 
+            course.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                    startActivity(intent);
+                }
+            });
+
             course.setLayoutParams(btnParams);
             courses.addView(course);
         }
+        LoadURL.getURL(this, "http://intervislab.ru/histologyprac/eng/getPracList.php");
     }
 }
