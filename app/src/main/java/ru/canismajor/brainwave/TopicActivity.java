@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,17 +20,22 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class MainActivity extends AppCompatActivity {
+public class TopicActivity extends AppCompatActivity {
 
+    String course;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_topic);
 
-        LinearLayout courses = findViewById(R.id.main_linlay);
+        Bundle data = getIntent().getExtras();
+
+        course = data.getString("course");
+
+        LinearLayout topics = findViewById(R.id.topic_linlay);
 
         try {
-            File json = new File(getFilesDir(), "courses.json");
+            File json = new File(getFilesDir(), "topics.json");
             FileInputStream fis = new FileInputStream(json);
             BufferedReader br = new BufferedReader(new InputStreamReader(fis));
             StringBuilder sb = new StringBuilder();
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 sb.append(line);
             }
             String fileContent = sb.toString();
-            LoadIntoListView(fileContent, courses);
+            LoadIntoListView(fileContent, topics);
             br.close();
             fis.close();
         } catch (IOException | JSONException e) {
@@ -53,14 +57,16 @@ public class MainActivity extends AppCompatActivity {
 
         String[] ids = new String[jsonArray.length()];
         String[] course_num = new String[jsonArray.length()];
-        String[] course_name = new String[jsonArray.length()];
+        String[] topic_num = new String[jsonArray.length()];
+        String[] topic_name = new String[jsonArray.length()];
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject object = jsonArray.getJSONObject(i);
                 ids[i] = object.getString("id");
                 course_num[i] = object.getString("course_num");
-                course_name[i] = object.getString("course_name");
+                topic_num[i] = object.getString("topic_num");
+                topic_name[i] = object.getString("topic_name");
             } catch (JSONException ignored) {}
         }
 
@@ -79,21 +85,25 @@ public class MainActivity extends AppCompatActivity {
         btnParams.setMargins(leftMarginPx, topMarginPx, rightMarginPx, bottomMarginPx);
 
         for (int i = 0; i < ids.length; i++) {
-            final int j = i;
-            View btn = (View) getLayoutInflater().inflate(R.layout.course_button, null);
-            TextView text = btn.findViewById(R.id.course_button_text);
-            text.setText(course_name[i]);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(getApplicationContext(), TopicActivity.class);
-                    intent.putExtra("course", course_num[j]);
-                    startActivity(intent);
-                }
-            });
+            if (course_num[i].equals(String.valueOf(course))) {
+                final int j = i;
+                View btn = (View) getLayoutInflater().inflate(R.layout.course_button, null);
+                TextView text = btn.findViewById(R.id.course_button_text);
+                text.setText(topic_name[i]);
+                btn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getApplicationContext(), TestActivity.class);
+                        intent.putExtra("course", course_num[j]);
+                        intent.putExtra("name", topic_name[j]);
+                        intent.putExtra("topic", topic_num[j]);
+                        startActivity(intent);
+                    }
+                });
 
-            btn.setLayoutParams(btnParams);
-            linearLayout.addView(btn);
+                btn.setLayoutParams(btnParams);
+                linearLayout.addView(btn);
+            }
         }
 
     }
