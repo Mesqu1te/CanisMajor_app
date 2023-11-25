@@ -18,11 +18,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestActivity extends AppCompatActivity {
 
     String course;
     String topic;
+
+    ArrayList<Question> final_questions = new ArrayList<>();
+
+    int right_answers = 0;
 
     int currentQuestion = 0;
     @Override
@@ -60,81 +66,92 @@ public class TestActivity extends AppCompatActivity {
 
     }
 
-    void LoadTest (String json) throws JSONException{
+    void LoadTest (String json) throws JSONException {
+
         JSONArray jsonArray = new JSONArray(json);
 
-        String[] ids = new String[jsonArray.length()];
-        String[] course_nums = new String[jsonArray.length()];
-        String[] topic_nums = new String[jsonArray.length()];
-        String[] question_nums = new String[jsonArray.length()];
-        String[] types = new String[jsonArray.length()];
-        String[] questions = new String[jsonArray.length()];
-        String[] images = new String[jsonArray.length()];
-        String[] as = new String[jsonArray.length()];
-        String[] bs = new String[jsonArray.length()];
-        String[] cs = new String[jsonArray.length()];
-        String[] ds = new String[jsonArray.length()];
-        String[] right_answers = new String[jsonArray.length()];
-        String[] a_alts = new String[jsonArray.length()];
-        String[] b_alts = new String[jsonArray.length()];
-        String[] c_alts = new String[jsonArray.length()];
-        String[] d_alts = new String[jsonArray.length()];
-        String[] pair_as = new String[jsonArray.length()];
-        String[] pair_bs = new String[jsonArray.length()];
-        String[] pair_cs = new String[jsonArray.length()];
-        String[] pair_ds = new String[jsonArray.length()];
+        Question[] questions = new Question[50];
+
+
+
 
         for (int i = 0; i < jsonArray.length(); i++) {
             try {
                 JSONObject object = jsonArray.getJSONObject(i);
-                ids[i] = object.getString("id");
-                course_nums[i] = object.getString("course_num");
-                topic_nums[i] =  object.getString("topic_num");
-                question_nums[i] = object.getString("question_num");
-                types[i] = object.getString("type");
-                questions[i] = object.getString("question");
-                images[i] = object.getString("image");
-                as[i] = object.getString("a");
-                bs[i] = object.getString("b");
-                cs[i] = object.getString("c");
-                ds[i] = object.getString("d");
-                right_answers[i] = object.getString("right_answer");
-                a_alts[i] = object.getString("a_alt");
-                b_alts[i] = object.getString("b_alt");
-                c_alts[i] = object.getString("c_alt");
-                d_alts[i] = object.getString("d_alt");
-                pair_as[i] = object.getString("pair_a");
-                pair_bs[i] = object.getString("pair_b");
-                pair_cs[i] = object.getString("pair_c");
-                pair_ds[i] = object.getString("pair_d");
-            } catch (JSONException ignored) {}
-        }
+                Question question = new Question();
+                try{question.setId(object.getString("id"));}catch(JSONException e) {}
 
-        for (int i = 0; i < ids.length; i++) {
-            if (types[i].equals("1")) { // выбор варианта
-                View option = findViewById(R.id.test_option_view);
-                TextView question = option.findViewById(R.id.test_option_question);
+                try{question.setCourse_num(object.getString("course_num"));}catch(JSONException e) {}
+                try{question.setTopic_num(object.getString("topic_num"));}catch(JSONException e) {}
+                try{question.setQuestion_num(object.getString("question_num"));}catch(JSONException e) {}
+                try{question.setType(object.getString("type"));}catch(JSONException e) {}
+                try{question.setQuestion(object.getString("question"));}catch(JSONException e) {}
+                try{question.setImage(object.getString("image"));}catch(JSONException e) {}
+                try{question.setA(object.getString("a"));}catch(JSONException e) {}
+                try{question.setB(object.getString("b"));}catch(JSONException e) {}
+                try{question.setC(object.getString("c"));}catch(JSONException e) {}
+                try{question.setD(object.getString("d"));}catch(JSONException e) {}
+                try{question.setRight_answer(object.getString("right_answer"));}catch(JSONException e) {}
 
+                questions[i] = question;
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
         }
+
+        ShowQuestion(questions[1]);
     }
 
-    //void ShowQuestion(String id, String course_num, String topic_num, String question_num, String type,
-    //                  String question, String image, String a, String b, String c, String d,
-    //                  String right_answer, String a_alt, String b_alt, String c_alt, String d_alt,
-    //                  String pair_a, String pair_b, String pair_c, String pair_d)
-    //{
-    //    if (type.equals("1")) {
-    //        View option = findViewById(R.id.test_option_view);
-    //        TextView question = option.findViewById(R.id.test_option_question);
-    //        ImageView iv = option.findViewById(R.id.test_option_image);
-    //        if (!image.equals("")) {
-    //            Glide.with(this).load(image).into(iv);
-    //        }
-    //        TextView a_tv = option.findViewById(R.id.test_option_a);
-    //        TextView b_tv = option.findViewById(R.id.test_option_b);
-    //        TextView c_tv = option.findViewById(R.id.test_option_c);
-    //        TextView d_tv = option.findViewById(R.id.test_option_d);
-    //    }
-    //}
+    void ShowQuestion(Question question)
+    {
+
+        View option = findViewById(R.id.test_option_view);
+        TextView question_tv = option.findViewById(R.id.test_option_question);
+
+        TextView a_tv = option.findViewById(R.id.test_option_a);
+        TextView b_tv = option.findViewById(R.id.test_option_b);
+        TextView c_tv = option.findViewById(R.id.test_option_c);
+        TextView d_tv = option.findViewById(R.id.test_option_d);
+        System.out.println(question.getQuestion());
+        question_tv.setText(question.getQuestion());
+
+        a_tv.setText(question.getA());
+        b_tv.setText(question.getB());
+        c_tv.setText(question.getC());
+        d_tv.setText(question.getD());
+
+        String right = question.getRight_answer();
+
+        View.OnClickListener click = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (right.equals("1")) {
+                    a_tv.setBackgroundColor(getResources().getColor(R.color.teal));
+                    b_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    c_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    d_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                } else if (right.equals("2")) {
+                    a_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    b_tv.setBackgroundColor(getResources().getColor(R.color.teal));
+                    c_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    d_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                } else if (right.equals("3")) {
+                    a_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    b_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    c_tv.setBackgroundColor(getResources().getColor(R.color.teal));
+                    d_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                } else if (right.equals("4")) {
+                    a_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    b_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    c_tv.setBackgroundColor(getResources().getColor(R.color.pink));
+                    d_tv.setBackgroundColor(getResources().getColor(R.color.teal));
+                }
+            }
+        };
+        a_tv.setOnClickListener(click);
+        b_tv.setOnClickListener(click);
+        c_tv.setOnClickListener(click);
+        d_tv.setOnClickListener(click);
+    }
+
 }

@@ -23,7 +23,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 try {
-                    URL url = new URL("https://www.intervislab.ru/hackathon/coursesList.php");
+                    URL url = new URL("http://www.intervislab.ru/hackathon/coursesList.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.connect();
                     InputStream input = connection.getInputStream();
@@ -48,7 +48,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     loadCourses.join();
-                    URL url = new URL("https://www.intervislab.ru/hackathon/topicsList.php");
+                    URL url = new URL("http://www.intervislab.ru/hackathon/topicsList.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.connect();
                     InputStream input = connection.getInputStream();
@@ -73,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try {
                     loadTopics.join();
-                    URL url = new URL("https://www.intervislab.ru/hackathon/questionsList.php");
+                    URL url = new URL("http://www.intervislab.ru/hackathon/questionsList.php");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.connect();
                     InputStream input = connection.getInputStream();
